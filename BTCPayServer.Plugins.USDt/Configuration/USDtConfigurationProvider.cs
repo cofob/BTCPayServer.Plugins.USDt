@@ -121,6 +121,7 @@ public static class USDtConfigurationProvider
         yield return GetEthUSDtHardcodedConfig(chainName);
         yield return GetPolygonUSDtHardcodedConfig(chainName);
         yield return GetBscUSDtHardcodedConfig(chainName);
+        yield return GetPlasmaUSDtHardcodedConfig(chainName);
     }
 
     private static EVMUSDtLikeConfigurationItem OverrideWithAppConfig(EVMUSDtLikeConfigurationItem config, IConfiguration configuration)
@@ -300,6 +301,57 @@ public static class USDtConfigurationProvider
                 BlockExplorerLink = "https://testnet.bscscan.com/tx/{0}",
                 BlockTimeSeconds = 1.0,
                 ChainId = 97
+            },
+            _ => throw new NotSupportedException()
+        };
+    }
+
+    private static EVMUSDtLikeConfigurationItem GetPlasmaUSDtHardcodedConfig(ChainName chainName)
+    {
+        const string plasmaLogo =
+            "data:image/svg+xml,%3Csvg width='165' height='165' viewBox='0 0 165 165' fill='none' xmlns='http://www.w3.org/2000/svg'%3E" +
+            "%3Ccircle cx='82.5' cy='82.5' r='82.5' fill='%23162F29'/%3E" +
+            "%3Cpath d='M60 45H92C108 45 120 57 120 73C120 89 108 101 92 101H76V120H60V45ZM76 60V86H92C99 86 104 80 104 73C104 66 99 60 92 60H76Z' fill='white'/%3E" +
+            "%3C/svg%3E%0A";
+
+        return chainName switch
+        {
+            _ when chainName == ChainName.Mainnet => new EVMUSDtLikeConfigurationItem(Constants.PlasmaChainName)
+            {
+                Currency = Constants.USDtCurrency,
+                CurrencyDisplayName = Constants.USDtCurrencyDisplayName,
+                DisplayName = $"{Constants.USDtCurrencyDisplayName} on {Constants.PlasmaChainName}",
+                CryptoImagePath = plasmaLogo,
+                DefaultRateRules =
+                [
+                    $"{Constants.USDtCurrency}_USD = 1",
+                    $"{Constants.USDtCurrency}_BTC = USD_BTC",
+                    $"{Constants.USDtCurrency}_X = {Constants.USDtCurrency}_BTC * BTC_X"
+                ],
+                Divisibility = 6,
+                SmartContractAddress = "0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb",
+                JsonRpcUri = new Uri("https://rpc.plasma.to"),
+                BlockExplorerLink = "https://plasmascan.to/tx/{0}",
+                BlockTimeSeconds = 1.0,
+                ChainId = 9745
+            },
+            _ when chainName == ChainName.Testnet => new EVMUSDtLikeConfigurationItem(Constants.PlasmaTestnetChainName)
+            {
+                Currency = Constants.USDtCurrency,
+                CurrencyDisplayName = Constants.USDtCurrencyDisplayName,
+                DisplayName = $"{Constants.USDtCurrencyDisplayName} on {Constants.PlasmaTestnetChainName}",
+                CryptoImagePath = plasmaLogo,
+                DefaultRateRules =
+                [
+                    $"{Constants.USDtCurrency}_USD = 1",
+                    $"{Constants.USDtCurrency}_X = {Constants.USDtCurrency}_BTC * BTC_X"
+                ],
+                Divisibility = 6,
+                SmartContractAddress = "0x0000000000000000000000000000000000000000",
+                JsonRpcUri = new Uri("https://testnet-rpc.plasma.to"),
+                BlockExplorerLink = "https://testnet.plasmascan.to/tx/{0}",
+                BlockTimeSeconds = 1.0,
+                ChainId = 9746
             },
             _ => throw new NotSupportedException()
         };

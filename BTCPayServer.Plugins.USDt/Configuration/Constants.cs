@@ -9,6 +9,8 @@ public static class Constants
     public const string AmoyChainName = "AMOY";
     public const string BscChainName = "BSC";
     public const string BscTestnetChainName = "BSCTESTNET";
+    public const string PlasmaChainName = "PLASMA";
+    public const string PlasmaTestnetChainName = "PLASMATESTNET";
     public const string USDtCurrency = "USDt";
     public const string USDtCurrencyDisplayName = "USD\u20ae";
 }

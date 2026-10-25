@@ -19,6 +19,7 @@ The plugin extends the functionality of BTCPay Server, a self-hosted cryptocurre
 - [x] TRON
 - [x] Ethereum
 - [x] Polygon
+- [x] Plasma
 
 ## 📗 Requirements
 

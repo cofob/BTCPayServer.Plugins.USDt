@@ -574,6 +574,7 @@ public class FastTests : UnitTestBase
         Assert.Equal(11155111, evmConfigurations[Constants.SepoliaChainName].ChainId);
         Assert.Equal(80002, evmConfigurations[Constants.AmoyChainName].ChainId);
         Assert.Equal(97, evmConfigurations[Constants.BscTestnetChainName].ChainId);
+        Assert.Equal(9746, evmConfigurations[Constants.PlasmaTestnetChainName].ChainId);
     }
 
     [Fact]
